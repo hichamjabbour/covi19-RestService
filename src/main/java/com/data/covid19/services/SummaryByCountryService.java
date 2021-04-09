@@ -15,7 +15,7 @@ import com.google.firebase.cloud.FirestoreClient;
 @Service
 public class SummaryByCountryService {
 	 public static final String COL_NAME="SummaryByCountry";  
-	 public String savePatientDetails(SummaryByCountry summaryByCountry) throws InterruptedException, ExecutionException {  
+	 public String saveSummaryByCountryDetails(SummaryByCountry summaryByCountry) throws InterruptedException, ExecutionException {  
 	 Firestore dbFirestore = FirestoreClient.getFirestore();  
 	 ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(summaryByCountry.getCountry()).set(summaryByCountry);  
 	 return collectionsApiFuture.get().getUpdateTime().toString();  
