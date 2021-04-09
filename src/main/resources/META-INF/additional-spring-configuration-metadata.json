@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "firebase.json.location",
+  "type": "java.lang.String",
+  "description": "A description for firebase json file location"
+}]}
