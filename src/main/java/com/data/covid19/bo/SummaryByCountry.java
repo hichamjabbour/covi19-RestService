@@ -1,6 +1,6 @@
 package com.data.covid19.bo;
-import lombok.Setter;
 import lombok.Getter;
+import lombok.Setter;
 
 public class SummaryByCountry {
 	@Setter
@@ -54,8 +54,4 @@ public class SummaryByCountry {
 	@Setter
 	@Getter
 	private int TotalRecovered;
-	
-	
-	
-	
 }
