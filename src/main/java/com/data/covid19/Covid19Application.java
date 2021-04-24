@@ -5,7 +5,6 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 @SpringBootApplication
 public class Covid19Application extends SpringBootServletInitializer{
 	 

@@ -15,28 +15,61 @@
 	<description>Demo project for Spring Boot</description>
 	<packaging>war</packaging>
 	<properties>
-		<java.version>8</java.version>
-		<tomcat.version>9.0.45</tomcat.version>
+ 		<maven.compiler.source>1.8</maven.compiler.source>
+  		<maven.compiler.target>1.8</maven.compiler.target>
+  		<!--<tomcat.version>9.0.45</tomcat.version>-->
 	</properties>
 	<dependencies>
-	<dependency>
+<dependency>
    <groupId>org.springframework.boot</groupId>
-   <artifactId>spring-boot-starter-tomcat</artifactId>
-   <scope>provided</scope>
+   <artifactId>spring-boot-starter-test</artifactId>
+   <scope>test</scope>
 </dependency>
+
+<!--<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-jetty</artifactId>
+</dependency> -->
 
   <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+        <exclusion>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </exclusion>
+    </exclusions>
 		</dependency>
+		<dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-devtools</artifactId>
+        <optional>true</optional>
+    </dependency>
 		<dependency> 
     <groupId>org.springframework.boot</groupId> 
     <artifactId>spring-boot-starter-thymeleaf</artifactId> 
 </dependency>
+
   <dependency>
       <groupId>se.jiderhamn.classloader-leak-prevention</groupId>
       <artifactId>classloader-leak-prevention-servlet</artifactId>
       <version>2.1.0</version>
+    </dependency>
+    
+    <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+    <version>3.0.1</version>
+    <scope>provided</scope>
+</dependency>
+
+<!-- Spring Boot also includes a JUL to SLF4J bridge that interferes with App Engine’s log handler that’s provided through Jetty server -->
+<dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jul-to-slf4j</artifactId>
+      <scope>provided</scope>
     </dependency>
 
  <!-- <dependency>
@@ -47,7 +80,7 @@
 <dependency>  
  <groupId>com.google.firebase</groupId>  
  <artifactId>firebase-admin</artifactId>  
- <version>6.11.0</version>  
+<version>7.1.1</version>
  </dependency>  
  <dependency>
     <groupId>com.fasterxml.jackson.dataformat</groupId>
@@ -74,13 +107,39 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
+ <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-gcp-starter</artifactId>
+      <version>1.0.0.RELEASE</version>
+    </dependency>
+    <!-- <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-gcp-starter-sql-mysql</artifactId>
+      <version>1.0.0.RELEASE</version>
+    </dependency> -->
 	</dependencies>
-
+   
 	<build>
 	    <finalName>${artifactId}</finalName>
 
 		<plugins>
+		<plugin>
+  <groupId>com.google.cloud.tools</groupId>
+  <artifactId>appengine-maven-plugin</artifactId>
+  <version>2.4.0</version>
+    <configuration>
+     <deploy.projectId>covi19-api</deploy.projectId>
+     <deploy.version>1</deploy.version>
+     <cloudSdkHome>/usr/lib/google-cloud-sdk</cloudSdkHome>
+     <cloudSdkVersion>337.0.0</cloudSdkVersion>
+    <deployables>
+      <param>target/covid19/WEB-INF/appengine-web.xml</param>
+     </deployables>
+    </configuration>
+</plugin>
+		
+					<!-- Configure the Tomcat Maven plugin -->
+		
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -92,39 +151,36 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- Configure the Tomcat Maven plugin -->
-		 <plugin>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-maven-plugin</artifactId>
-		</plugin>	
     <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-           <configuration>    
-            <mainClass>com.data.covid19.Covid19Application</mainClass>
-        </configuration>
-        <!-- I don't specify version at all (Spring Boot can autoconfigure plugin version) -->
-        <executions>
-            <execution>
-                <!-- changed <id> to <phase>, but I don't know whether it's important or not. -->
-                <phase>integration-test</phase>
-                <!-- ... no changes here: the same as in the question ... -->
-            </execution>
-        </executions>
-    </plugin>
-<plugin>
-  <groupId>org.apache.tomcat.maven</groupId>
-  <artifactId>tomcat7-maven-plugin</artifactId>
-  <version>2.0</version>
-  <configuration>
-    <url>http://localhost:8080/manager/text</url>
-        <username>hicham</username>
-        <password>secret</password>
-         <!-- Update when redeploying-->
-         <update>true</update>
-         <path>/${project.build.finalName}</path>
-  </configuration>
-</plugin>
+    <!-- Building an executable jar -->
+
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                <configuration>
+                <failOnMissingWebXML>false</failOnMissingWebXML>
+                </configuration>
+                  <archive>
+                    <manifest>
+
+                     <!-- give full qualified name of your main class-->
+                      <mainClass>com.data.covid19.Covid19Application</mainClass>
+
+                    </manifest>
+                  </archive>
+                  </configuration>
+                  </plugin>
 		</plugins>
 	</build>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+            <groupId>com.google.cloud</groupId>
+            <artifactId>spring-cloud-gcp-dependencies</artifactId>
+            <version>2.0.2</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>

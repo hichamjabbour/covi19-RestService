@@ -5,10 +5,7 @@ import java.util.concurrent.ExecutionException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,6 +20,12 @@ public class SummaryByCountryController {
 	 public SummaryByCountryService summaryByCountryService;  
 		
 	 private final Logger LOG = LogManager.getLogger(getClass());
+	 
+	 @RequestMapping(value =  "/api/test/{name}",method = RequestMethod.GET , produces = "application/json")  
+	 public String getTestPathparam( @PathVariable(value = "name") String name) throws InterruptedException, ExecutionException{  
+	 LOG.debug("getSummaryByCountryDetails with name=%s", name);
+	 return name;  
+	 } 
 
 	 @RequestMapping(value =  "/api/summary/{name}",method = RequestMethod.GET , produces = "application/json")  
 	 public SummaryByCountry getSummaryByCountry( @PathVariable(value = "name") String name) throws InterruptedException, ExecutionException{  
