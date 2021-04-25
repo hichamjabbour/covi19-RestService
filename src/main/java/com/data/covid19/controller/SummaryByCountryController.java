@@ -46,7 +46,7 @@ public class SummaryByCountryController {
 	 }  
 	 
 	 @RequestMapping(value =  "/api/deleteSummary/{name}",method = RequestMethod.DELETE , consumes = "application/json")  
-	 public String deleteSummaryByCountry(@PathVariable(value = "name") String name){ 
+	 public String deleteSummaryByCountry(@PathVariable(value = "name") String name) throws InterruptedException, ExecutionException{ 
 	 LOG.debug("deleteSummaryByCountry with name=%s", name);		 
 	 return summaryByCountryService.deleteSummaryByCountry(name);
 	 }  

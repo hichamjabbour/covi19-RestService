@@ -14,15 +14,16 @@ import com.google.firebase.cloud.FirestoreClient;
 
 @Service
 public class SummaryByCountryService {
-	 public static final String COL_NAME="SummaryByCountry";  
+	 public static final String COL_NAME="SummaryByCountry"; 
+	 
+
 	 public String saveSummaryByCountryDetails(SummaryByCountry summaryByCountry) throws InterruptedException, ExecutionException {  
 	 Firestore dbFirestore = FirestoreClient.getFirestore();  
 	 ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(summaryByCountry.getCountry()).set(summaryByCountry);  
 	 return collectionsApiFuture.get().getUpdateTime().toString();  
 	 }  
 	 public SummaryByCountry getSummaryByCountryDetails(String name) throws InterruptedException, ExecutionException {
-		 
-	 Firestore dbFirestore = FirestoreClient.getFirestore();  
+	 Firestore dbFirestore = FirestoreClient.getFirestore();  	 
 	 DocumentReference documentReference = dbFirestore.collection(COL_NAME).document(name);  
 	 ApiFuture<DocumentSnapshot> future = documentReference.get();  
 	 DocumentSnapshot document = future.get();  
@@ -39,7 +40,8 @@ public class SummaryByCountryService {
 	 ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(summaryByCountry.getCountry()).set(summaryByCountry);  
 	 return collectionsApiFuture.get().getUpdateTime().toString();  
 	 }  
-	 public String deleteSummaryByCountry(String country) {  
-	 //FirestoreClient.getFirestore();  
-	 return "Document with SummaryByCountry ID "+country+" has been deleted";  
+	 public String deleteSummaryByCountry(String country) throws InterruptedException, ExecutionException {  
+	 Firestore dbFirestore = FirestoreClient.getFirestore();  
+	 ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(country).delete();
+	 return collectionsApiFuture.get().getUpdateTime().toString();  
 	 }}
