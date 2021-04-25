@@ -45,7 +45,7 @@ public class SummaryByCountryController {
 	  return summaryByCountryService.updateSummaryByCountry(summaryByCountry);
 	 }  
 	 
-	 @RequestMapping(value =  "/api/updateSummary",method = RequestMethod.DELETE , consumes = "application/json")  
+	 @RequestMapping(value =  "/api/deleteSummary/{name}",method = RequestMethod.DELETE , consumes = "application/json")  
 	 public String deleteSummaryByCountry(@PathVariable(value = "name") String name){ 
 	 LOG.debug("deleteSummaryByCountry with name=%s", name);		 
 	 return summaryByCountryService.deleteSummaryByCountry(name);
