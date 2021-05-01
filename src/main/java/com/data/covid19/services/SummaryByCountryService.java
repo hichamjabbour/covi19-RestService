@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import com.data.covid19.SummaryNotFoundException;
 import com.data.covid19.bo.SummaryByCountry;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutureCallback;
@@ -37,14 +38,26 @@ public class SummaryByCountryService {
 	 if(document.exists()) {  
 	 summaryByCountry = document.toObject(SummaryByCountry.class);  
 	 return summaryByCountry;  
-	 }else {  
-	 return null;  
-	 }  
+	 }
+	 
+	 throw new SummaryNotFoundException("Country not found", null);  
+  
 	 }  
 	 public String updateSummaryByCountry(SummaryByCountry summaryByCountry) throws InterruptedException, ExecutionException {  
 	 Firestore dbFirestore = FirestoreClient.getFirestore();  
-	 ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(COL_NAME).document(summaryByCountry.getCountry()).set(summaryByCountry);  
-	 return collectionsApiFuture.get().getUpdateTime().toString();  
+	 DocumentReference documentReference =  dbFirestore.collection(COL_NAME).document(summaryByCountry.getCountry());
+	 ApiFuture<DocumentSnapshot> future = documentReference.get();  
+	 DocumentSnapshot document = future.get();
+	 if(document != null)
+	 {		 
+		 ApiFuture<WriteResult> collectionsApiFuture  = documentReference.set(summaryByCountry);  
+		 return collectionsApiFuture.get().getUpdateTime().toString();  
+	 }
+	 
+
+	 throw new SummaryNotFoundException("Country not found", null);  
+	
+	 
 	 }  
 	 @SuppressWarnings("deprecation")
 	public String deleteSummaryByCountry(String country) throws InterruptedException, ExecutionException {  
@@ -74,6 +87,7 @@ public class SummaryByCountryService {
 		 
 	 }
 	 
-    return null;  
+	  throw new SummaryNotFoundException("Country not found", null);  
+ 
 	 }
    }
