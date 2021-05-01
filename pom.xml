@@ -61,9 +61,20 @@
 <dependency>
     <groupId>javax.servlet</groupId>
     <artifactId>javax.servlet-api</artifactId>
-    <version>3.0.1</version>
     <scope>provided</scope>
 </dependency>
+
+
+<!-- Maven dependencies are required for the RestTemplate itself and for the HttpClient library -->
+<dependency>
+   <groupId>org.springframework</groupId>
+   <artifactId>spring-webmvc</artifactId>
+   </dependency>
+
+<dependency>
+   <groupId>org.apache.httpcomponents</groupId>
+   <artifactId>httpclient</artifactId>
+   </dependency>
 
 <!-- Spring Boot also includes a JUL to SLF4J bridge that interferes with App Engine’s log handler that’s provided through Jetty server -->
 <dependency>
@@ -131,7 +142,7 @@
      <deploy.projectId>covi19-api</deploy.projectId>
      <deploy.version>1</deploy.version>
      <cloudSdkHome>/usr/lib/google-cloud-sdk</cloudSdkHome>
-     <cloudSdkVersion>337.0.0</cloudSdkVersion>
+     <cloudSdkVersion>338.0.0</cloudSdkVersion>
     <deployables>
       <param>target/covid19/WEB-INF/appengine-web.xml</param>
      </deployables>
