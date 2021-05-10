@@ -1,0 +1,33 @@
+Create USER 'hicham'@'localhost' IDENTIFIED BY 'password'
+
+Create DATABASE [IF NOT EXISTS] TEST;
+
+use TEST;
+
+CREATE TABLE country(
+   id int NOT NULL AUTO_INCREMENT,
+   countryName NVARCHAR(100) NOT NULL,
+   PRIMARY KEY ( id )
+);
+
+CREATE TABLE user(
+   id int NOT NULL AUTO_INCREMENT,
+   firstName NVARCHAR(100) NOT NULL,
+   lastName NVARCHAR(40) NOT NULL,
+   emailAdress  NVARCHAR(40) NOT NULL,
+   password  NVARCHAR(40) NOT NULL,
+   phoneNumber LONG,
+   age int  NOT NULL,
+   countryEntity_id int NOT NULL,
+   PRIMARY KEY ( id ),
+   FOREIGN KEY (countryEntity_id) REFERENCES country(id)
+);
+
+GRANT ALL PRIVILEGES ON TEST.* TO 'hicham'@'localhost';
+FLUSH PRIVILEGES;
+
+INSERT INTO country (id,countryName) VALUES (1,'France');
+commit;
+INSERT INTO user (id,firstName,lastName,emailAdress,password,phoneNumber,age,countryEntity_id) VALUES (1,'hicham','jabbour','hicham.jabbour12@gmail.com','password',75142531,29,1);
+commit;
+
