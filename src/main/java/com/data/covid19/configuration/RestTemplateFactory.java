@@ -1,4 +1,4 @@
-package com.data.covid19;
+package com.data.covid19.configuration;
 
 import org.apache.http.HttpHost;
 import org.springframework.beans.factory.FactoryBean;
@@ -8,7 +8,10 @@ import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-//the RestTemplate with Basic Authentication will require manual intervention, so instead of declaring the bean directly, a Spring FactoryBean will be used for more flexibility.
+/**
+ * The RestTemplate with Basic Authentication will require manual intervention, so instead of declaring the bean directly, a Spring FactoryBean will be used for more flexibility.
+ */
+@SuppressWarnings("deprecation")
 @Component
 public class RestTemplateFactory implements FactoryBean<RestTemplate>, InitializingBean {
     
@@ -25,8 +28,7 @@ public class RestTemplateFactory implements FactoryBean<RestTemplate>, Initializ
         return true;
     }
 
-    @SuppressWarnings("deprecation")
-	public void afterPropertiesSet() {
+    public void afterPropertiesSet() {
         HttpHost host = new HttpHost("localhost", 8080, "http");
         restTemplate = new RestTemplate(
           new HttpComponentsClientHttpRequestFactoryBasicAuth(host));

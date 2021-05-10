@@ -1,4 +1,4 @@
-package com.data.covid19;
+package com.data.covid19.configuration;
 
 import java.net.URI;
 
@@ -9,10 +9,8 @@ import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.stereotype.Component;
 
 public class HttpComponentsClientHttpRequestFactoryBasicAuth  extends HttpComponentsClientHttpRequestFactory {
   

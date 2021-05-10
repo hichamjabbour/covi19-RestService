@@ -2,13 +2,10 @@ package com.data.covid19.controller;
 
 import java.util.concurrent.ExecutionException;
 
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.data.covid19.SummaryNotFoundException;
 import com.data.covid19.bo.SummaryByCountry;
 import com.data.covid19.services.SummaryByCountryService;
 
@@ -24,8 +20,8 @@ import com.data.covid19.services.SummaryByCountryService;
 @RestController
 @RequestMapping(path = "/api")
 public class SummaryByCountryController {
-	@Autowired
-	private Environment env;
+	// @Autowired
+	// private Environment env;
 	 
 	 @Autowired
 	 public SummaryByCountryService summaryByCountryService;  

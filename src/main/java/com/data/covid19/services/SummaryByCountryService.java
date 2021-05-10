@@ -6,8 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import com.data.covid19.SummaryNotFoundException;
 import com.data.covid19.bo.SummaryByCountry;
+import com.data.covid19.configuration.SummaryNotFoundException;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutureCallback;
 import com.google.api.core.ApiFutures;
@@ -59,8 +59,8 @@ public class SummaryByCountryService {
 	
 	 
 	 }  
-	 @SuppressWarnings("deprecation")
-	public String deleteSummaryByCountry(String country) throws InterruptedException, ExecutionException {  
+   
+   public String deleteSummaryByCountry(String country) throws InterruptedException, ExecutionException {  
 	 Firestore dbFirestore = FirestoreClient.getFirestore();  
 	 DocumentReference documentReference = dbFirestore.collection(COL_NAME).document(country);
 	 ApiFuture<DocumentSnapshot> future = documentReference.get();  

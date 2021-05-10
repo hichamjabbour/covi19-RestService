@@ -20,16 +20,7 @@
   		<!--<tomcat.version>9.0.45</tomcat.version>-->
 	</properties>
 	<dependencies>
-<dependency>
-   <groupId>org.springframework.boot</groupId>
-   <artifactId>spring-boot-starter-test</artifactId>
-   <scope>test</scope>
-</dependency>
 
-<!--<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-jetty</artifactId>
-</dependency> -->
 
   <dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -50,7 +41,7 @@
 		<dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-devtools</artifactId>
-        <optional>true</optional>
+        <scope>runtime</scope>
     </dependency>
 		<dependency> 
     <groupId>org.springframework.boot</groupId> 
@@ -63,6 +54,23 @@
       <version>2.1.0</version>
     </dependency>
     
+    
+    <!--  MySQL JDBC driver -->
+    <dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    </dependency>
+    <dependency>
+    <groupId>com.google.cloud.sql</groupId>
+    <artifactId>mysql-socket-factory-connector-j-8</artifactId>
+    <version>1.2.3</version>
+   </dependency>
+    <dependency>
+     <groupId>com.google.api-client</groupId>
+     <artifactId>google-api-client</artifactId>
+     <version>1.31.2</version>
+   </dependency>
+   
     <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 <dependency>
     <groupId>javax.servlet</groupId>
@@ -94,10 +102,15 @@
       <scope>provided</scope>
     </dependency>
 
- <!-- <dependency>
+     <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency> -->
+        </dependency>
+        
+        <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-rest</artifactId>
+		</dependency>
 
 <dependency>  
  <groupId>com.google.firebase</groupId>  
@@ -141,11 +154,25 @@
       <artifactId>spring-cloud-gcp-starter</artifactId>
       <version>1.0.0.RELEASE</version>
     </dependency>
-    <!-- <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-gcp-starter-sql-mysql</artifactId>
-      <version>1.0.0.RELEASE</version>
-    </dependency> -->
+    
+    <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-gcp-dependencies</artifactId>
+            <version>1.0.0.RELEASE</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+
+    <dependency>
+    	<groupId>org.springframework.boot</groupId>
+    	<artifactId>spring-boot-configuration-processor</artifactId>
+    	<optional>true</optional>
+    </dependency>
+    <dependency>
+    	<groupId>org.springframework.boot</groupId>
+    	<artifactId>spring-boot-configuration-processor</artifactId>
+    	<optional>true</optional>
+    </dependency>
 	</dependencies>
    
 	<build>
@@ -160,7 +187,7 @@
      <deploy.projectId>covi19-api</deploy.projectId>
      <deploy.version>1</deploy.version>
      <cloudSdkHome>/usr/lib/google-cloud-sdk</cloudSdkHome>
-     <cloudSdkVersion>338.0.0</cloudSdkVersion>
+     <cloudSdkVersion>339.0.0</cloudSdkVersion>
     <deployables>
       <param>target/covid19/WEB-INF/appengine-web.xml</param>
      </deployables>

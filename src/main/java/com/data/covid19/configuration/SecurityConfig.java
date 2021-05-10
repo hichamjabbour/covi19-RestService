@@ -1,6 +1,4 @@
-package com.data.covid19;
-
-import java.util.Arrays;
+package com.data.covid19.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,5 +27,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    protected void configure(HttpSecurity http) throws Exception{
 	        http.cors().and().csrf().disable();
 	    }
-
+	    
 }
